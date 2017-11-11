@@ -47,12 +47,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Html\HtmlTag.cs" />
+    <Compile Include="Markdown\IMarkdownParser.cs" />
+    <Compile Include="Markdown\MarkdownParser.cs" />
     <Compile Include="Md.cs" />
+    <Compile Include="Md_ShouldRender.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="README.md" />
+    <None Include="Spec.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
