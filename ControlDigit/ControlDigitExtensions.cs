@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using NUnit.Framework;
 
 namespace ControlDigit
@@ -28,7 +30,38 @@ namespace ControlDigit
 
 		public static int ControlDigit2(this long number)
 		{
-			throw new NotImplementedException();
+			var sum = number
+				.DigitsFromLeastSignificant()
+				.WeightedSum(new[] {1, 3}.Cycle());
+
+			var result = sum % 10;
+			return result == 10 ? 1 : result;
+
+		}
+
+	    public static int WeightedSum(this IEnumerable<int> source, IEnumerable<int> weights)
+	        => source.Zip(weights, (a, b) => a * b).Sum();
+
+
+		public static IEnumerable<T> Cycle<T>(this IEnumerable<T> source)
+		{
+			var l = source.ToList();
+			while(true) {
+				foreach (var item in l)
+				{
+					yield return item;
+				}
+			}
+		}
+
+		public static IEnumerable<int> DigitsFromLeastSignificant(this long number)
+		{
+			while (number > 0)
+			{
+				int digit = (int)(number % 10);
+				yield return digit;
+				number /= 10;
+			}
 		}
 	}
 
