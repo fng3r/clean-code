@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -6,22 +6,33 @@ namespace Markdown
 {
     public class Md
     {
-        private readonly IMarkdownParser parser;
-
-        public Md(IMarkdownParser parser)
+        private static readonly Dictionary<string, HtmlTag> mdToHtml = new Dictionary<string, HtmlTag>
         {
-            this.parser = parser;
+            ["_"] = new HtmlTag("em"),
+            ["__"] = new HtmlTag("strong")
+        };
+
+        public static string RenderToHtml(string markdown)
+        {
+            var tagFinder = new TagFinder(markdown);
+            var tags = tagFinder.FindTags();
+            return MdToHtml(markdown, tags);
         }
 
-        public string RenderToHtml(string markdown)
+        private static string MdToHtml(string markdown, List<MdTag> tags)
         {
-            var lines = markdown.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            var html = lines
-                .Select(parser.ParseLine)
-                .Aggregate(new StringBuilder(), (sb, line) => sb.AppendLine(line))
-                .ToString();
+            var result = new StringBuilder();
+            var index = 0;
+            foreach (var tag in tags)
+            {
+                result.Append(markdown.UnescapeSubstring(index, tag.StartIndex - index));
+                var htmlTag = mdToHtml[tag.Value];
+                result.Append(tag.IsOpening ? htmlTag.OpeningTag : htmlTag.ClosingTag);
+                index = tag.EndIndex;
+            }
 
-            return new HtmlTag("p", html).ToString();
+            result.Append(markdown.Substring(index).UnescapeSubstring());
+            return result.ToString();
         }
     }
 }
