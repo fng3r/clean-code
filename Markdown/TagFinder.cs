@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Markdown
 {
-    class TagFinder
+    public class TagFinder
     {
         private static readonly HashSet<string> mdTags = new HashSet<string> { "__", "_" };
         private readonly string markdown;
 
-        public TagFinder(string markdown) => this.markdown = markdown;
+        public TagFinder(string markdown)
+        {
+            this.markdown = markdown;
+        }
 
         public List<MdTag> FindTags()
         {
@@ -57,6 +59,7 @@ namespace Markdown
             tag.StartIndex > 0 && char.IsDigit(markdown[tag.StartIndex - 1]) || 
             tag.EndIndex < markdown.Length && char.IsDigit(markdown[tag.EndIndex]);
 
-        private bool HasPairedOpeningTag(MdTag closingTag, Stack<MdTag> openingTags) => openingTags.Count > 0 && openingTags.Peek().Value == closingTag.Value;
+        private static bool HasPairedOpeningTag(MdTag closingTag, Stack<MdTag> openingTags)
+            => openingTags.Count > 0 && openingTags.Peek().Value == closingTag.Value;
     }
 }

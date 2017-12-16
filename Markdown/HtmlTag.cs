@@ -8,7 +8,7 @@
             ClosingTag = $"</{tagName}>";
         }
 
-        public string OpeningTag { get; set; }
-        public string ClosingTag { get; set; }
+        public string OpeningTag { get; }
+        public string ClosingTag { get; }
     }
 }
