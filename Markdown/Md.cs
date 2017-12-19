@@ -8,7 +8,8 @@ namespace Markdown
         private static readonly Dictionary<string, HtmlTag> mdToHtml = new Dictionary<string, HtmlTag>
         {
             ["_"] = new HtmlTag("em"),
-            ["__"] = new HtmlTag("strong")
+            ["__"] = new HtmlTag("strong"),
+            ["`"] = new HtmlTag("code")
         };
 
         public static string RenderToHtml(string markdown)
@@ -30,7 +31,7 @@ namespace Markdown
                 index = tag.EndIndex;
             }
 
-            result.Append(markdown.Substring(index).UnescapeSubstring());
+            result.Append(markdown.UnescapeSubstring(index));
             return result.ToString();
         }
     }

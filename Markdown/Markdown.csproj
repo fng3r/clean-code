@@ -42,6 +42,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="MdTag.cs" />
+    <Compile Include="TagChecker.cs" />
     <Compile Include="TagFinder.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 using FluentAssertions;
 using NUnit.Framework;
+using NUnit.Framework.Internal.Filters;
 
 namespace Markdown.Tests
 {
@@ -55,6 +56,27 @@ namespace Markdown.Tests
                 .Should().Be("<em>a <strong>b</strong> c</em>");
         }
 
+        [Test]
+        public void RenderCode()
+        {
+            Md.RenderToHtml(" `var a = 5;`")
+                .Should().Be(" <code>var a = 5;</code>");
+        }
+
+        [TestCase("_`this is code;`_", ExpectedResult = "<em><code>this is code;</code></em>", TestName = "italic")]
+        [TestCase("__`this is code;`__", ExpectedResult = "<strong><code>this is code;</code></strong>", TestName = "bold")]
+        public string RenderCode_WhenInside(string markdown)
+        {
+            return Md.RenderToHtml(markdown);
+        }
+
+        [Test]
+        public void RenderCode_WithDigitsInside()
+        {
+            Md.RenderToHtml("`123`456")
+                .Should().Be("<code>123</code>456");
+        }
+
         [TestCase("_ abc_", TestName = "after opening tag")]
         [TestCase("_abc _", TestName = "before closing tag")]
         public void IgnoreTags_IfTheyAreSpaced(string markdown)
@@ -63,8 +85,8 @@ namespace Markdown.Tests
                 .Should().Be(markdown);
         }
 
-        [TestCase("_12_2", TestName = "digit after closing tag")]
-        [TestCase("1_abc_", TestName = "digit before opening tag")]
+        [TestCase("_12_2", TestName = "after closing tag")]
+        [TestCase("1_abc_", TestName = "before opening tag")]
         public void IgnoreTags_WithDigits(string markdown)
         {
             Md.RenderToHtml(markdown)
@@ -74,8 +96,8 @@ namespace Markdown.Tests
         [Test]
         public void IgnoreTags_IfEscaped()
         {
-             Md.RenderToHtml(@"\_a_")
-                .Should().Be(@"_a_");
+             Md.RenderToHtml(@"\`a`")
+                .Should().Be(@"`a`");
         }
 
         [Test]

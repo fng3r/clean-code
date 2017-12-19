@@ -6,7 +6,7 @@ namespace Markdown
     {
         public static string Unescape(this string str, char escapeCharacter = '\\') => str.UnescapeSubstring(0, str.Length, escapeCharacter);
 
-        public static string UnescapeSubstring(this string str, int startIndex = 0, char escapeCharacter = '\\') => str.UnescapeSubstring(startIndex, str.Length);
+        public static string UnescapeSubstring(this string str, int startIndex, char escapeCharacter = '\\') => str.UnescapeSubstring(startIndex, str.Length - startIndex, escapeCharacter);
 
         public static string UnescapeSubstring(this string str, int startIndex, int length, char escapeCharacter = '\\')
         {
