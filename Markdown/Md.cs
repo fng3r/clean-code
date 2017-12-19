@@ -14,7 +14,7 @@ namespace Markdown
 
         public static string RenderToHtml(string markdown)
         {
-            var tagFinder = new TagFinder(markdown);
+            var tagFinder = new MdTagFinder(markdown);
             var tags = tagFinder.FindTags();
             return MdToHtml(markdown, tags);
         }

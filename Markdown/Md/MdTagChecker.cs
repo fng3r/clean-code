@@ -1,24 +1,5 @@
-﻿namespace Markdown
+namespace Markdown
 {
-    public class SingleUnderscoreTagChecker : MdTagChecker
-    {
-        public SingleUnderscoreTagChecker(string markdown) : base(markdown) { }
-    }
-
-    public class DoubleUnderscoreTagChecker : MdTagChecker
-    {
-        public DoubleUnderscoreTagChecker(string markdown) : base(markdown) { }
-    }
-
-    public class BackquoteTagChecker : MdTagChecker
-    {
-        public BackquoteTagChecker(string markdown) : base(markdown) { }
-        
-        public override bool IsOpeningTag(MdTag tag) => !IsTagEscaped(tag);
-
-        public override bool IsClosingTag(MdTag tag) => !IsTagEscaped(tag);
-    }
-
     public abstract class MdTagChecker : IMdTagChecker
     {
         protected readonly string markdown;
@@ -43,11 +24,5 @@
         protected bool IsDigitNearTag(MdTag tag) =>
             tag.StartIndex > 0 && char.IsDigit(markdown[tag.StartIndex - 1]) ||
             tag.EndIndex < markdown.Length && char.IsDigit(markdown[tag.EndIndex]);
-    }
-
-    public interface IMdTagChecker
-    {
-        bool IsOpeningTag(MdTag tag);
-        bool IsClosingTag(MdTag tag);
     }
 }

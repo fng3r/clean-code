@@ -37,13 +37,17 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HtmlTag.cs" />
+    <Compile Include="Html\HtmlTag.cs" />
     <Compile Include="Md.cs" />
+    <Compile Include="Md\BackquoteTagChecker.cs" />
+    <Compile Include="Md\DoubleUnderscoreTagChecker.cs" />
+    <Compile Include="Md\IMdTagChecker.cs" />
+    <Compile Include="Md\MdTagChecker.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="StringExtensions.cs" />
-    <Compile Include="MdTag.cs" />
-    <Compile Include="TagChecker.cs" />
-    <Compile Include="TagFinder.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Md\MdTag.cs" />
+    <Compile Include="Md\SingleUnderscoreTagChecker.cs" />
+    <Compile Include="Md\MdTagFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

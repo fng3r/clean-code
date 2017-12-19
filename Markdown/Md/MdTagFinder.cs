@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace Markdown
 {
-    public class TagFinder
+    public class MdTagFinder
     {
         private readonly Dictionary<string, IMdTagChecker> mdTagCheckers;
         private readonly IEnumerable<string> mdTags;
         private readonly string markdown;
 
-        public TagFinder(string markdown)
+        public MdTagFinder(string markdown)
         {
             this.markdown = markdown;
             mdTagCheckers = new Dictionary<string, IMdTagChecker>
